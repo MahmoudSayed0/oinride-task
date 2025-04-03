@@ -402,7 +402,7 @@ function App() {
       </div>
 
       {/* Left side controls - Toggleable for responsive design */}
-      <div className="absolute left-0 top-24 sm:top-28 md:top-24 z-20">
+      <div className="absolute left-0 top-24 sm:top-28 md:top-24 z-10">
         {/* Toggle button - always visible */}
         <Button
           variant="outline"
@@ -448,8 +448,8 @@ function App() {
           </Card>
 
           {/* Speed multiplier */}
-          <Card className="bg-gray-900/80 backdrop-blur-sm border-gray-800 p-1 sm:p-2 rounded-lg w-28 sm:w-32">
-            <div className="space-y-0.5 sm:space-y-1">
+          <Card className="bg-gray-900/80 backdrop-blur-sm border-gray-800 p-1 sm:p-2 rounded-lg w-16 sm:w-auto">
+            <div className="flex text-xs sm:text-sm space-y-0.5 sm:space-y-1">
               {[
                 { label: "2x", value: 2 },
                 { label: "1x", value: 1 },
@@ -459,7 +459,7 @@ function App() {
                   key={item.label}
                   variant="ghost"
                   className={cn(
-                    "w-full justify-start text-xs sm:text-sm py-1",
+                    "w-auto justify-start text-xs sm:text-xs py-1",
                     speedMultiplier === item.value
                       ? "bg-gray-800 text-white border-r-4 border-yellow-500 rounded-r-none"
                       : "text-gray-400"
@@ -550,7 +550,7 @@ function App() {
       </div>
 
       {/* Joysticks - Better mobile layout */}
-      <div className="absolute bottom-4 inset-x-0 flex justify-between items-end p-2 mx-6">
+      <div className="absolute bottom-4 inset-x-0 flex justify-between items-end p-2 mx-6 z-50">
         {/* Left joystick */}
         <div className="transform scale-75 origin-bottom-left">
           <Joystick id="joystick-left" onChange={handleLeftJoystickChange} />
