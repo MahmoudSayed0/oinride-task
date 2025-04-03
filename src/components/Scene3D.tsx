@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
 import * as THREE from "three";
 
@@ -137,7 +137,6 @@ const Tunnel: React.FC<{
             Math.PI / 3 // 60 degrees
           );
         }
-
         // Update left/right indicators for camera rotation
         setIndicators((prev) => ({
           ...prev,
@@ -219,6 +218,13 @@ const Tunnel: React.FC<{
         onPositionUpdate(positionData);
       }
     }
+
+    // Update laser position and rotation in real-time if active
+    if (lights?.laser && cameraRef.current) {
+      // The group and pointLight positions are updated each frame
+      // This ensures the laser stays perfectly attached to the camera
+      // even during rapid movement
+    }
   });
 
   const tunnelGeometry = new THREE.CylinderGeometry(5, 5, 100, 32, 32, true);
@@ -250,6 +256,43 @@ const Tunnel: React.FC<{
       startPositionRef.current = new THREE.Vector3(0, 2, 10);
     }
   }, [resetCamera]);
+
+  useEffect(() => {
+    // Make lights follow camera position
+    if (cameraRef.current) {
+      // Update scene lighting based on camera position
+      const cameraPosition = cameraRef.current.position.clone();
+      const cameraDirection = new THREE.Vector3(0, 0, -1);
+      cameraDirection.applyQuaternion(cameraRef.current.quaternion);
+
+      // Update tunnel material based on lighting
+      if (tunnelRef.current) {
+        const material = tunnelRef.current
+          .material as THREE.MeshStandardMaterial;
+
+        // Make tunnel more reflective when lights are on
+        if (lights?.light) {
+          material.metalness = 0.5;
+          material.roughness = 0.4;
+          material.emissive.set("#332211");
+          material.emissiveIntensity = 0.1;
+        } else if (lights?.spotLight) {
+          material.metalness = 0.6;
+          material.roughness = 0.3;
+          material.emissive.set("#111111");
+          material.emissiveIntensity = 0.05;
+        } else if (lights?.laser) {
+          material.emissive.set("#330000");
+          material.emissiveIntensity = 0.2;
+        } else {
+          material.metalness = 0.2;
+          material.roughness = 0.8;
+          material.emissive.set("#000000");
+          material.emissiveIntensity = 0;
+        }
+      }
+    }
+  }, [lights, cameraRef.current?.position]);
 
   return (
     <>
@@ -305,6 +348,119 @@ const Tunnel: React.FC<{
           axis="backward"
         />
       </group>
+
+      {/* Main light - yellowish light that comes from the camera when activated */}
+      {lights?.light && (
+        <>
+          {/* Spotlight that follows the camera with yellowish tint */}
+          <spotLight
+            position={[0, 2, 9]} // Position slightly above and in front of camera
+            angle={0.6}
+            penumbra={0.5}
+            intensity={1.5}
+            color="#FFD580" // Warm yellowish color
+            castShadow
+            distance={20}
+          />
+
+          {/* Additional point light for more ambient illumination */}
+          <pointLight
+            position={[0, 2, 9.5]}
+            intensity={0.8}
+            color="#FFF5E1"
+            distance={15}
+          />
+        </>
+      )}
+
+      {/* Spotlight - more focused beam */}
+      {lights?.spotLight && (
+        <spotLight
+          position={[0, 2, 9]} // Position at camera
+          angle={0.3} // Narrower angle than main light
+          penumbra={0.2}
+          intensity={2.5}
+          color="#FFFFFF" // Bright white
+          castShadow
+          distance={30}
+        />
+      )}
+
+      {/* Laser - red beam that projects forward from camera */}
+      {lights?.laser && (
+        <>
+          {/* Red point light for glow effect - follows camera */}
+          <pointLight
+            position={[
+              cameraRef.current?.position.x || 0,
+              cameraRef.current?.position.y || 2,
+              cameraRef.current?.position.z || 9.5,
+            ]}
+            intensity={2}
+            color="#FF0000"
+            distance={15}
+          />
+
+          {/* Laser beam geometry - dynamically positioned and rotated with camera */}
+          <group
+            position={[
+              cameraRef.current?.position.x || 0,
+              cameraRef.current?.position.y || 2,
+              cameraRef.current?.position.z || 9.5,
+            ]}
+            rotation={[
+              cameraRef.current?.rotation.x || 0,
+              cameraRef.current?.rotation.y || 0,
+              cameraRef.current?.rotation.z || 0,
+            ]}>
+            {/* Main laser beam - thin and intense */}
+            <mesh position={[0, 0, -2]} rotation={[Math.PI / 2, 0, 0]}>
+              <cylinderGeometry args={[0.02, 0.02, 100, 8]} />
+              <meshBasicMaterial
+                color="#FF0000"
+                opacity={0.9}
+                transparent={true}
+              />
+            </mesh>
+
+            {/* Outer glow effect */}
+            <mesh position={[0, 0, -2]} rotation={[Math.PI / 2, 0, 0]}>
+              <cylinderGeometry args={[0.05, 0.05, 100, 12]} />
+              <meshBasicMaterial
+                color="#FF3333"
+                opacity={0.3}
+                transparent={true}
+                blending={THREE.AdditiveBlending}
+              />
+            </mesh>
+
+            {/* Core glow - brightest part */}
+            <mesh position={[0, 0, -2]} rotation={[Math.PI / 2, 0, 0]}>
+              <cylinderGeometry args={[0.01, 0.01, 100, 6]} />
+              <meshBasicMaterial
+                color="#FFFFFF"
+                opacity={0.7}
+                transparent={true}
+                blending={THREE.AdditiveBlending}
+              />
+            </mesh>
+
+            {/* Laser origin point (small sphere at camera) */}
+            <mesh position={[0, 0, 0]}>
+              <sphereGeometry args={[0.08, 16, 16]} />
+              <meshBasicMaterial
+                color="#FF0000"
+                opacity={0.8}
+                transparent={true}
+                blending={THREE.AdditiveBlending}
+              />
+            </mesh>
+          </group>
+
+          {/* Add fog effect when laser is active */}
+          <fog attach="fog" color="#330000" near={10} far={50} />
+        </>
+      )}
     </>
   );
 };
@@ -341,7 +497,7 @@ const Scene3D: React.FC<Scene3DProps> = ({
         resetCamera={resetCamera}
       />
 
-      <ambientLight intensity={0.3} />
+      <ambientLight intensity={lights.light || lights.spotLight ? 0.3 : 0.1} />
       <pointLight position={[10, 10, 10]} intensity={0.5} />
       <pointLight position={[-10, -10, -10]} intensity={0.2} />
 
