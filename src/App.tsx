@@ -586,35 +586,35 @@ function App() {
 
       {/* Speed Display - Better mobile positioning */}
       <div className="absolute left-1/2 md:bottom-28 bottom-12 -translate-x-1/2 text-center z-10">
-        <Card className="flex items-center gap-4 bg-zinc-900/90 backdrop-blur-sm border-zinc-800 p-2 rounded-xl shadow-lg">
+        <Card className="flex justify-between items-center gap-4 bg-zinc-900/90 backdrop-blur-sm border-zinc-800 p-2 rounded-xl shadow-lg">
           <div className="flex flex-col items-center">
+            <div className="flex z-50 bottom-4 right-4 gap-2 items-center bg-gray-900/70 backdrop-blur-sm p-1.5 rounded-lg shadow-md">
+              <div className="z-50">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-10 w-10 rounded-full bg-blue-800/80 border-blue-700 hover:bg-blue-700 transition-all duration-200 shadow-lg"
+                  onClick={handleStop}
+                  title="Reset Controls">
+                  <RefreshCw className="h-5 w-5 text-white" />
+                </Button>
+              </div>
+              <div className="z-50 ">
+                <Button
+                  variant="destructive"
+                  size="icon"
+                  className="h-10 w-10 rounded-full bg-red-600 border-2 border-red-400 hover:bg-red-700 shadow-lg active:scale-95 transition-all duration-200"
+                  onClick={handleStop}>
+                  <Square className="h-5 w-5 text-white" fill="white" />
+                </Button>
+              </div>
+
+              {/* Reset button */}
+            </div>
             <div className="text-4xl font-bold tracking-wider text-white">
               {speed.toFixed(1)}
             </div>
             <div className="text-xs text-orange-400 mt-1">m/s</div>
-          </div>
-          <div className="flex gap-2 items-center bg-gray-900/70 backdrop-blur-sm p-1.5 rounded-lg shadow-md">
-            <div className="">
-              <Button
-                variant="destructive"
-                size="icon"
-                className="h-10 w-10 rounded-full bg-red-600 border-2 border-red-400 hover:bg-red-700 shadow-lg active:scale-95 transition-all duration-200"
-                onClick={handleStop}>
-                <Square className="h-5 w-5 text-white" fill="white" />
-              </Button>
-            </div>
-
-            {/* Reset button - Fixed position at bottom right */}
-            <div className=" right-4 bottom-24 z-20">
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-10 w-10 rounded-full bg-blue-800/80 border-blue-700 hover:bg-blue-700 transition-all duration-200 shadow-lg"
-                onClick={handleReset}
-                title="Reset Controls">
-                <RefreshCw className="h-5 w-5 text-white" />
-              </Button>
-            </div>
           </div>
         </Card>
       </div>
