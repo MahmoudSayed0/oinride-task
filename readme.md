@@ -71,28 +71,3 @@ Key responsive features:
    ```bash
    npm run dev
    ```
-
-4. **Build for production:**
-   ```bash
-   npm run build
-   ```
-
-## Configuration
-
-The system can be configured through environment variables:
-
-## Deployment
-
-The application can be deployed to any static hosting service:
-
-## Future Enhancements
-
-- **Enhanced Mapping**: Integration with terrain mapping and GPS overlays
-- **Telemetry Recording**: Session recording and playback functionality
-- **Multi-vehicle Support**: Control and monitor multiple vehicles
-- **User Authentication**: Role-based access control
-- **Advanced Analytics**: Real-time performance metrics and diagnostics
-
-### Joystick Controls
-
-Dual joysticks provide intuitive movement control with haptic-like visual feedback:
