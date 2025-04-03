@@ -82,7 +82,7 @@ const TopHUD: React.FC<TopHUDProps> = ({
           <div className="flex items-center px-4 border-r border-gray-800 h-full">
             <div className="flex flex-col">
               <span className="text-xs text-gray-400">Running</span>
-              <span className="text-sm">{runtime}</span>
+              <span className="text-xs">{runtime}</span>
             </div>
           </div>
 
@@ -90,7 +90,7 @@ const TopHUD: React.FC<TopHUDProps> = ({
           <div className="flex items-center px-4 border-r border-gray-800 h-full">
             <div className="flex flex-col">
               <span className="text-xs text-gray-400">Latitude</span>
-              <span className="text-sm">{latitude}</span>
+              <span className="text-xs">{latitude}</span>
             </div>
           </div>
 
@@ -99,7 +99,7 @@ const TopHUD: React.FC<TopHUDProps> = ({
             <div className="flex flex-col items-center">
               <span className="text-xs text-gray-400">STATUS</span>
               <div
-                className={`px-4 py-1 rounded text-sm ${statusColors[status]}`}>
+                className={`px-4 py-1 rounded text-xs ${statusColors[status]}`}>
                 {status}
               </div>
             </div>
@@ -109,7 +109,7 @@ const TopHUD: React.FC<TopHUDProps> = ({
           <div className="flex items-center px-4 border-r border-gray-800 h-full">
             <div className="flex flex-col">
               <span className="text-xs text-gray-400">Longitude</span>
-              <span className="text-sm">{longitude}</span>
+              <span className="text-xs">{longitude}</span>
             </div>
           </div>
 
@@ -117,7 +117,7 @@ const TopHUD: React.FC<TopHUDProps> = ({
           <div className="flex items-center px-4 border-r border-gray-800 h-full">
             <div className="flex flex-col">
               <span className="text-xs text-gray-400">Elevation</span>
-              <span className="text-sm">{elevation}</span>
+              <span className="text-xs">{elevation}</span>
             </div>
           </div>
 
@@ -125,7 +125,7 @@ const TopHUD: React.FC<TopHUDProps> = ({
           <div className="flex items-center px-4 border-r border-gray-800 h-full">
             <div className="flex flex-col">
               <span className="text-xs text-gray-400">Temperature</span>
-              <span className="text-sm">{temperature}</span>
+              <span className="text-xs">{temperature}</span>
             </div>
           </div>
 
@@ -148,7 +148,7 @@ const TopHUD: React.FC<TopHUDProps> = ({
 
             {/* Battery */}
             <div className="flex items-center mr-4">
-              <div className="w-6 h-3 border border-gray-400 rounded-sm relative">
+              <div className="w-6 h-3 border border-gray-400 rounded-xs relative">
                 <div
                   className={`absolute top-0 left-0 bottom-0 ${
                     batteryLevel > 20 ? "bg-green-500" : "bg-red-500"
@@ -161,7 +161,7 @@ const TopHUD: React.FC<TopHUDProps> = ({
             {/* Date and time */}
             <div className="text-right">
               <div className="text-xs text-gray-300">{`${formattedDate}`}</div>
-              <div className="text-sm">{formattedTime}</div>
+              <div className="text-xs">{formattedTime}</div>
             </div>
           </div>
         </div>

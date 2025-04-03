@@ -539,7 +539,7 @@ function App() {
       </div>
 
       {/* Gauges - Better mobile scaling */}
-      <div className="absolute top-20 sm:top-24 md:top-24 left-1/2 transform -translate-x-1/2 flex space-x-2 sm:space-x-4 md:space-x-16 scale-[0.55] sm:scale-[0.5] md:scale-100 origin-top">
+      <div className="absolute top-24 sm:top-24 md:top-16 left-1/2 transform -translate-x-1/2 flex space-x-2 sm:space-x-4 md:space-x-16 scale-[0.55] sm:scale-[0.5] md:scale-100 origin-top">
         <GaugeDisplay value={pitch} label="Pitch" direction="" />
         <GaugeDisplay
           value={heading}
@@ -550,7 +550,7 @@ function App() {
       </div>
 
       {/* Joysticks - Better mobile layout */}
-      <div className="absolute bottom-0 inset-x-0 flex justify-between items-end p-2">
+      <div className="absolute bottom-4 inset-x-0 flex justify-between items-end p-2 mx-6">
         {/* Left joystick */}
         <div className="transform scale-75 origin-bottom-left">
           <Joystick id="joystick-left" onChange={handleLeftJoystickChange} />
@@ -585,12 +585,14 @@ function App() {
       </div>
 
       {/* Speed Display - Better mobile positioning */}
-      <div className="absolute left-1/2 md:bottom-36 bottom-16 -translate-x-1/2 text-center z-10">
-        <Card className="bg-zinc-900/90 backdrop-blur-sm border-zinc-800 p-2 rounded-xl shadow-lg">
-          <div className="text-4xl font-bold tracking-wider text-white">
-            {speed.toFixed(1)}
+      <div className="absolute left-1/2 md:bottom-28 bottom-12 -translate-x-1/2 text-center z-10">
+        <Card className="flex items-center gap-4 bg-zinc-900/90 backdrop-blur-sm border-zinc-800 p-2 rounded-xl shadow-lg">
+          <div className="flex flex-col items-center">
+            <div className="text-4xl font-bold tracking-wider text-white">
+              {speed.toFixed(1)}
+            </div>
+            <div className="text-xs text-orange-400 mt-1">m/s</div>
           </div>
-          <div className="text-xs text-orange-400 mt-1">m/s</div>
           <div className="flex gap-2 items-center bg-gray-900/70 backdrop-blur-sm p-1.5 rounded-lg shadow-md">
             <div className="">
               <Button
