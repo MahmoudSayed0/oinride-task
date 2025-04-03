@@ -14,7 +14,8 @@ The goal of this project was to convert a static UI design into a working intera
 - **Responsive Layout:**  
   Developed using React and Tailwind CSS to ensure a responsive design across devices.
 
-- **Interactive Controls:**  
+- **Interactive Controls:**
+
   - **Joystick:**  
     Smooth movement within a circular boundary with support for both mouse and touch events.
   - **Control Buttons:**  
@@ -35,9 +36,63 @@ The goal of this project was to convert a static UI design into a working intera
 - **Three.js (via react-three-fiber)** – To create the realistic 3D live scene.
 - **TypeScript** – For type-safe code and improved development experience.
 
+## Responsive Design
+
+The interface is fully responsive with optimized layouts for:
+
+- Desktop workstations
+- Tablets
+- Mobile devices
+
+Key responsive features:
+
+- Collapsible information panels on mobile
+- Scaled controls for different screen sizes
+- Optimized touch interactions for mobile use
+- Adaptive layout with priority information maintained on smaller screens
+
 ## Installation & Setup
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/your-username/controlwire.git
    cd controlwire
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server:**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for production:**
+   ```bash
+   npm run build
+   ```
+
+## Configuration
+
+The system can be configured through environment variables:
+
+## Deployment
+
+The application can be deployed to any static hosting service:
+
+## Future Enhancements
+
+- **Enhanced Mapping**: Integration with terrain mapping and GPS overlays
+- **Telemetry Recording**: Session recording and playback functionality
+- **Multi-vehicle Support**: Control and monitor multiple vehicles
+- **User Authentication**: Role-based access control
+- **Advanced Analytics**: Real-time performance metrics and diagnostics
+
+### Joystick Controls
+
+Dual joysticks provide intuitive movement control with haptic-like visual feedback:
