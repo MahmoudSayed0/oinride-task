@@ -17,6 +17,7 @@ import {
   Square,
   ChevronUp,
   ChevronDown,
+  RefreshCw,
 } from "lucide-react";
 
 // Move GaugeDisplay component definition BEFORE App function
@@ -300,6 +301,48 @@ function App() {
     }
   };
 
+  // Add this function to your App component
+  const handleReset = () => {
+    // Reset camera view and position
+    setCameraReset(true);
+
+    // Reset position data
+    setPositionData({
+      distance: 0,
+      latitude: 60.2828, // Base latitude (60°16'58" N)
+      longitude: 25.0267, // Base longitude (25°01'96" E)
+      elevation: 127, // Base elevation
+    });
+
+    // Reset after animation completes
+    setTimeout(() => {
+      setCameraReset(false);
+    }, 800); // Longer timeout to ensure position reset completes
+
+    // Reset joysticks
+    setJoystickLeft({ x: 0, y: 0 });
+    setJoystickRight({ x: 0, y: 0 });
+
+    // Reset lights
+    setLights({
+      light: false,
+      spotLight: false,
+      laser: false,
+    });
+
+    // Reset zoom
+    setZoomLevel(1);
+
+    // Reset speed
+    setSpeed(0.5);
+    setSpeedMultiplier(0.5);
+
+    // Reset orientation
+    setPitch(0);
+    setHeading(35);
+    setRoll(10);
+  };
+
   return (
     <div className="relative w-full h-screen bg-black overflow-hidden">
       {/* Main content area with 3D scene */}
@@ -470,7 +513,7 @@ function App() {
       {/* Joysticks and speed display - Responsive */}
       <div className="absolute bottom-0 inset-x-0 flex justify-between items-end p-2 sm:p-4 md:p-8">
         {/* Left joystick */}
-        <div className="transform scale-50 sm:scale-75 md:scale-100 origin-bottom-left">
+        <div className="transform scale-75 sm:scale-75 md:scale-100 origin-bottom-left">
           <Joystick id="joystick-left" onChange={handleLeftJoystickChange} />
         </div>
 
@@ -487,7 +530,7 @@ function App() {
         </div>
 
         {/* Right joystick */}
-        <div className="transform scale-50 sm:scale-75 md:scale-100 origin-bottom-right">
+        <div className="transform scale-75 sm:scale-75 md:scale-100 origin-bottom-right">
           <Joystick id="joystick-right" onChange={handleRightJoystickChange} />
         </div>
       </div>
@@ -510,6 +553,17 @@ function App() {
                 {mode}
               </Button>
             ))}
+            {/* Reset button - Responsive */}
+            <div className="absolute right-2 sm:right-3 md:right-4 lg:right-6 bottom-16 sm:bottom-16 md:bottom-32 z-10 scale-75 sm:scale-90 md:scale-100 origin-bottom-right">
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-10 w-10 md:h-12 md:w-12 rounded-md bg-blue-800/70 border-blue-700 hover:bg-blue-700 transition-all duration-200"
+                onClick={handleReset}
+                title="Reset Controls">
+                <RefreshCw className="h-5 w-5 md:h-6 md:w-6 text-white" />
+              </Button>
+            </div>
           </div>
         </Card>
       </div>

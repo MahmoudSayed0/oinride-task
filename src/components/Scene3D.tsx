@@ -52,6 +52,7 @@ const Tunnel: React.FC<{
     longitude: number;
     elevation: number;
   }) => void;
+  resetCamera?: boolean;
 }> = ({
   joystickLeft,
   joystickRight,
@@ -60,6 +61,7 @@ const Tunnel: React.FC<{
   zoomLevel = 1,
   lights,
   onPositionUpdate,
+  resetCamera,
 }) => {
   const tunnelRef = useRef<THREE.Mesh>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera>(null);
@@ -236,6 +238,19 @@ const Tunnel: React.FC<{
   gridTexture.wrapT = THREE.RepeatWrapping;
   gridTexture.repeat.set(100, 100);
 
+  useEffect(() => {
+    if (resetCamera && cameraRef.current) {
+      // Reset camera position to starting position
+      cameraRef.current.position.set(0, 2, 10);
+
+      // Reset camera rotation
+      cameraRef.current.rotation.set(0, 0, 0);
+
+      // Update the start position reference
+      startPositionRef.current = new THREE.Vector3(0, 2, 10);
+    }
+  }, [resetCamera]);
+
   return (
     <>
       <PerspectiveCamera
@@ -323,6 +338,7 @@ const Scene3D: React.FC<Scene3DProps> = ({
         zoomLevel={zoomLevel}
         lights={lights}
         onPositionUpdate={onPositionUpdate}
+        resetCamera={resetCamera}
       />
 
       <ambientLight intensity={0.3} />
